@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'json', '~> 1.3'
   s.add_dependency 'omniauth-oauth2', '~>1.3.1'
+  s.add_dependency 'jwt', '~>1.5'
   s.add_development_dependency 'bundler', '~> 1.0'
 
 end

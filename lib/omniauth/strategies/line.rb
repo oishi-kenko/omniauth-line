@@ -1,3 +1,4 @@
+require 'jwt'
 require 'omniauth-oauth2'
 require 'json'
 
@@ -25,8 +26,16 @@ module OmniAuth
         {
           name:        raw_info['displayName'],
           image:       raw_info['pictureUrl'],
-          description: raw_info['statusMessage']
+          description: raw_info['statusMessage'],
+          email:       id_info['email']
         }
+      end
+
+      extra do
+        hash = {}
+        hash[:raw_info] = raw_info
+        hash[:id_info] = id_info
+        prune! hash
       end
 
       # Require: Access token with PROFILE permission issued.
@@ -36,6 +45,20 @@ module OmniAuth
         raise ::Timeout::Error
       end
 
+      def id_info
+        @id_info ||= ::JWT.decode(access_token.params['id_token'], nil, false, { algorithm: 'HS256' }).first
+      rescue ::Errno::ETIMEDOUT
+        raise ::Timeout::Error
+      end
+
+      private
+
+      def prune!(hash)
+        hash.delete_if do |_, v|
+          prune!(v) if v.is_a?(Hash)
+          v.nil? || (v.respond_to?(:empty?) && v.empty?)
+        end
+      end
     end
   end
 end
