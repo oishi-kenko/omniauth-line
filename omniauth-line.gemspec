@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency 'omniauth-oauth2', '~>1.4'
-  s.add_dependency 'jwt', '~>1.5'
+  s.add_dependency 'jwt', '~>2.0'
   s.add_development_dependency 'bundler', '~> 1.0'
 
 end
