@@ -33,6 +33,7 @@ describe OmniAuth::Strategies::Line do
   describe 'uid' do
     before do
       allow(subject).to receive(:raw_info).and_return(raw_info_hash)
+      allow(subject).to receive(:id_info).and_return(raw_id_info_hash)
     end
 
     it 'should returns the uid' do
@@ -43,6 +44,7 @@ describe OmniAuth::Strategies::Line do
   describe 'info' do
     before do
       allow(subject).to receive(:raw_info).and_return(raw_info_hash)
+      allow(subject).to receive(:id_info).and_return(raw_id_info_hash)
     end
 
     it 'should returns the name' do
@@ -83,5 +85,11 @@ def raw_info_hash
     'displayName'   => 'Foo Bar',
     'pictureUrl'    => 'http://xxx.com/aaa.jpg',
     'statusMessage' => 'Developer'
+  }
+end
+
+def raw_id_info_hash
+  {
+    'email' => 'example@example.com',
   }
 end
