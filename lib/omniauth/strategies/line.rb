@@ -36,10 +36,6 @@ module OmniAuth
         super
       end
 
-      def callback_url
-        options[:callback_url] || (full_host + callback_path)
-      end
-
       uid { raw_info['userId'] }
 
       info do
@@ -79,7 +75,7 @@ module OmniAuth
       end
 
       def callback_url
-        full_host + script_name + callback_path
+        options[:callback_url] || (full_host + callback_path)
       end
 
       private
