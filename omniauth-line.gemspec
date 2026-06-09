@@ -12,9 +12,9 @@ Gem::Specification.new do |s|
   s.summary     = s.description
   s.license     = "MIT"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files         = Dir.glob("**/*", File::FNM_DOTMATCH).reject { |f| File.directory?(f) || f == ".git" || f.start_with?(".git/") }
+  s.test_files    = s.files.grep(%r{^(test|spec|features)/})
+  s.executables   = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
   s.add_dependency 'json', '>= 2.3.0'
